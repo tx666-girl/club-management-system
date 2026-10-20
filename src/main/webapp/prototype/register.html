@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注册 - 社团管理系统</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <header class="auth-brand">
+      <span class="brand-mark" aria-hidden="true">社</span>
+      <div>
+        <strong>社团管理系统</strong>
+        <span>Club Management System</span>
+      </div>
+    </header>
+
+    <section class="auth-card">
+      <h1>创建账号</h1>
+      <p>注册后可以申请加入社团并查看申请进度。</p>
+
+      <form class="auth-form" action="login.html" method="get">
+        <div class="form-field">
+          <label for="username">账号</label>
+          <input id="username" name="username" type="text" placeholder="请输入账号">
+        </div>
+        <div class="form-field">
+          <label for="password">密码</label>
+          <input id="password" name="password" type="password" placeholder="请输入密码">
+        </div>
+        <div class="form-field">
+          <label for="confirmPassword">确认密码</label>
+          <input id="confirmPassword" name="confirmPassword" type="password" placeholder="请再次输入密码">
+        </div>
+        <div class="auth-actions">
+          <a class="button button-secondary" href="login.html">返回登录</a>
+          <button class="button button-primary" type="submit">注册</button>
+        </div>
+      </form>
+    </section>
+
+    <p class="auth-footer">校园社团协作平台</p>
+  </main>
+</body>
+</html>

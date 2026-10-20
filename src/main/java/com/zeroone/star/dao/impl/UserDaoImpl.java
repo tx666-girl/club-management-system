@@ -2,6 +2,12 @@ package com.zeroone.star.dao.impl;
 
 import com.zeroone.star.dao.UserDao;
 import com.zeroone.star.entity.User;
+import com.zeroone.star.util.DruidUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * <p>
@@ -15,21 +21,16 @@ import com.zeroone.star.entity.User;
 public class UserDaoImpl implements UserDao {
 
     @Override
+    //查找用户名
     public User getUserByUsername(String username) {
-        // TODO:硬编码测试获取用户信息
-        if ("admin".equals(username)) {
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword("123456");
-            user.setName("王三石");
-            return user;
-        }
+        // 改为数据库查询
         return null;
     }
 
     @Override
     public Integer getUrlCount(String username, String url) {
-        // TODO:硬编码获取实现
+        // 改为权限表查询
         return 1;
     }
+
 }

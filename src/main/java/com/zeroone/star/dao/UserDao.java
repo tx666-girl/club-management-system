@@ -27,4 +27,8 @@ public interface UserDao {
      * @return 返回资源个数
      */
     Integer getUrlCount(String username, String url);
+
+    /**
+     *
+     */
 }
