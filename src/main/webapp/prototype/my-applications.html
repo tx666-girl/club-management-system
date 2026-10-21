@@ -33,17 +33,19 @@
       <a class="button button-primary" href="home.html">继续浏览社团</a>
     </div>
 
+    <p id="myApplicationsMessage" class="message" role="alert"></p>
+
     <section class="profile-summary">
       <div class="profile-main">
         <span class="avatar">张</span>
         <div>
-          <h2>张三</h2>
-          <p>ID:123456 · 2024 级 · 普通成员</p>
+          <h2 id="profileName">张三</h2>
+          <p id="profileMeta">ID:123456 · 2024 级 · 普通成员</p>
         </div>
       </div>
       <div class="profile-actions">
-        <span class="tag">已加入 2 个社团</span>
-        <span class="tag amber">1 条申请中</span>
+        <span id="joinedCount" class="tag">已加入 0 个社团</span>
+        <span id="pendingCount" class="tag amber">0 条申请中</span>
       </div>
     </section>
 
@@ -65,7 +67,7 @@
               <th>处理时间</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="myApplicationTable">
             <tr>
               <td>计算机协会</td>
               <td>入团申请</td>
@@ -92,5 +94,8 @@
       </div>
     </section>
   </main>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/my-applications.js"></script>
 </body>
 </html>

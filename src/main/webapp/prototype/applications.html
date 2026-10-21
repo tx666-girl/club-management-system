@@ -33,11 +33,13 @@
       <span class="tag amber">3 条待处理</span>
     </div>
 
+    <p id="applicationsMessage" class="message" role="alert"></p>
+
     <section class="stats" aria-label="申请统计">
-      <div class="stat"><span>待审批</span><strong>3</strong></div>
-      <div class="stat"><span>已通过</span><strong>18</strong></div>
-      <div class="stat"><span>已驳回</span><strong>2</strong></div>
-      <div class="stat"><span>全部申请</span><strong>23</strong></div>
+      <div class="stat"><span>待审批</span><strong id="statPending">0</strong></div>
+      <div class="stat"><span>社团总数</span><strong id="statClubs">0</strong></div>
+      <div class="stat"><span>活动总数</span><strong id="statActivities">0</strong></div>
+      <div class="stat"><span>社团成员</span><strong id="statMembers">0</strong></div>
     </section>
 
     <section class="panel">
@@ -53,14 +55,14 @@
           <thead>
             <tr>
               <th>申请人</th>
-
+              <th>申请类型</th>
               <th>申请内容</th>
               <th>申请日期</th>
               <th>状态</th>
               <th>操作</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="applicationTableBody">
             <tr>
               <td>李四</td>
               <td>入团申请</td>
@@ -113,5 +115,8 @@
       </div>
     </section>
   </main>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/applications.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
-# 社团管理系统前端原型
+# 社团管理系统前端
 
-根据 Modao 产品流程图整理的可预览 HTML 原型。
+这些页面已经接入 `/api/*` 后端接口，不再是纯静态原型。
 
 ## 页面
 
@@ -8,7 +8,7 @@
 |---|---|
 | `login.html` | 登录 |
 | `register.html` | 注册 |
-| `admin.html` | 管理员界面原型总入口 |
+| `admin.html` | 管理员功能入口 |
 | `home.html` | 全部社团分类 |
 | `my-applications.html` | 普通成员查看入团申请 |
 | `applications.html` | 管理员审批入团/创建社团申请 |
@@ -23,33 +23,14 @@
 
 所有图片都放在 `assets/` 目录，使用本地 SVG，不依赖外部图片链接。
 
-分类入口会跳转到 `home.html?category=tech` 等地址，并由
-`js/home-filter.js` 过滤社团卡片。
+分类入口会跳转到 `home.html?category=tech` 等地址。
+`js/home.js` 会调用后端接口，重新加载对应分类的社团。
 
 后端接口契约见 `docs/API.md`。
 
-## 预览图
-
-`previews/` 目录包含每页桌面截图和手机截图。
-
-总览图：
-
-```text
-previews/overview.png
-```
-
 ## 说明
 
-- 这是纯 HTML/CSS 静态原型，没有连接后端。
-- 页面之间的导航链接可以直接点击。
+- 页面使用 HTML、CSS 和原生 JavaScript。
+- 登录状态由 `JSESSIONID` 保存。
+- 页面不能直接双击打开；必须通过 Tomcat 访问，才能调用后端接口。
 - 不依赖外部字体、图片或 JavaScript 库。
-- 后续可以直接把这些页面替换到 `src/main/webapp`，或者交给前端继续改成 JSP。
-
-## 删除
-
-如果不再需要这套原型，可以整体删除：
-
-```text
-C:\Users\ASUS\Documents\Codex\2026-10-18\w\outputs\club-prototype-html
-C:\Users\ASUS\Documents\Codex\2026-10-18\w\outputs\club-prototype-html.zip
-```

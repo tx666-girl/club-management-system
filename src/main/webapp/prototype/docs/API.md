@@ -1,32 +1,24 @@
-# 前后端接口约定
+# 社团管理系统接口
 
-这份文档用于把当前静态 HTML 原型接入 Servlet + JDBC 后端。
-
-## 基础约定
-
-如果部署在独立 Tomcat 的 `club-backend` 上下文，接口前缀是：
-
-```text
-/club-backend/api
-```
-
-如果部署在 Maven 内嵌 Tomcat 的根路径，接口前缀是：
+所有接口统一使用：
 
 ```text
 /api
 ```
 
-前端页面和接口在同一个 Web 应用里时，使用相对地址，不需要 CORS：
+前端页面位于 `/prototype/`，因此页面中的请求基础地址是：
 
 ```js
-fetch("/api/clubs", {
-  credentials: "same-origin"
-});
+const API_BASE = "../api";
 ```
 
-登录状态使用 `JSESSIONID`，前端不要自己保存用户角色作为权限依据。
+登录状态保存在 `JSESSIONID` 中，前端请求使用：
 
-统一响应格式：
+```js
+credentials: "same-origin"
+```
+
+统一响应：
 
 ```json
 {
@@ -36,11 +28,18 @@ fetch("/api/clubs", {
 }
 ```
 
-## 登录和注册
+## 登录和账号
 
-### POST `/api/auth/login`
+```text
+POST /api/auth/login
+POST /api/auth/register
+POST /api/auth/logout
+GET  /api/auth/me
+PUT  /api/auth/password
+PUT  /api/me/profile
+```
 
-请求：
+登录请求：
 
 ```json
 {
@@ -49,56 +48,31 @@ fetch("/api/clubs", {
 }
 ```
 
-成功响应：
+登录成功返回：
 
 ```json
 {
-  "code": 200,
-  "message": "success",
-  "data": {
-    "id": 1,
-    "username": "admin",
-    "name": "系统管理员",
-    "role": "ADMIN"
-  }
+  "id": 1,
+  "username": "admin",
+  "name": "系统管理员",
+  "studentNo": "A00001",
+  "grade": "教师",
+  "role": "ADMIN",
+  "status": "ACTIVE"
 }
 ```
-
-失败响应：
-
-```json
-{
-  "code": 401,
-  "message": "账号或密码错误",
-  "data": null
-}
-```
-
-### POST `/api/auth/register`
-
-请求：
-
-```json
-{
-  "username": "zhangsan",
-  "password": "123456",
-  "name": "张三"
-}
-```
-
-### POST `/api/auth/logout`
-
-销毁 Session，返回成功。
-
-### GET `/api/auth/me`
-
-返回当前 Session 用户。未登录返回 401。
 
 ## 社团
 
-### GET `/api/clubs?category=tech`
+```text
+GET /api/clubs
+GET /api/clubs?category=tech
+GET /api/clubs/{id}
+GET /api/clubs/{id}/announcements
+GET /api/clubs/{id}/activities
+```
 
-`category` 可选，对应页面的分类：
+分类值：
 
 ```text
 tech       学术科技
@@ -107,52 +81,23 @@ sport      体育运动
 volunteer  志愿公益
 ```
 
-返回：
+社团返回字段：
 
-```json
-{
-  "code": 200,
-  "message": "success",
-  "data": [
-    {
-      "id": 1,
-      "name": "计算机协会",
-      "category": "tech",
-      "description": "技术分享、项目实践和编程交流。",
-      "imageUrl": "assets/clubs/tech.svg",
-      "memberCount": 128,
-      "joined": false,
-      "pending": false
-    }
-  ]
-}
-```
-
-### GET `/api/clubs/{id}`
-
-返回社团详情、简介、活动数和用户当前入团状态。
-
-### GET `/api/clubs/{id}/announcements`
-
-返回社团公告：
-
-```json
-[
-  {
-    "id": 1,
-    "title": "本周活动报名开始",
-    "content": "请提前十分钟到场。",
-    "publisherName": "管理员",
-    "createdAt": "2026-10-19 10:00:00"
-  }
-]
+```text
+id, name, category, description, imageUrl,
+memberCount, joined, pending
 ```
 
 ## 普通成员
 
-### POST `/api/applications`
+```text
+POST /api/applications
+GET  /api/applications/my
+GET  /api/me/clubs
+GET  /api/me/announcements
+```
 
-申请加入社团：
+申请入团：
 
 ```json
 {
@@ -160,133 +105,89 @@ volunteer  志愿公益
 }
 ```
 
-### GET `/api/applications/my`
-
-返回当前用户的申请：
-
-```json
-[
-  {
-    "id": 10,
-    "clubId": 1,
-    "clubName": "计算机协会",
-    "status": "PENDING",
-    "createdAt": "2026-10-20 09:30:00",
-    "reviewedAt": null
-  }
-]
-```
-
-状态值：
-
-```text
-PENDING   待审批
-APPROVED  已通过
-REJECTED  已拒绝
-```
-
-### GET `/api/me/clubs`
-
-返回当前用户已经加入的社团。
-
-### GET `/api/me/announcements?limit=10`
-
-返回当前用户已加入社团的最新公告。
-
 ## 管理员
 
-以下接口必须由管理员 Session 访问。
-
-### GET `/api/admin/applications`
-
-返回待审批申请：
-
-```json
-[
-  {
-    "id": 10,
-    "applicantName": "李四",
-    "clubId": 1,
-    "clubName": "计算机协会",
-    "type": "JOIN",
-    "status": "PENDING",
-    "createdAt": "2026-10-20 09:30:00"
-  }
-]
-```
-
-### POST `/api/admin/applications/{id}/approve`
-
-通过申请。后端应在同一个事务中：
-
 ```text
-更新申请状态为 APPROVED
-写入社团成员表
-提交事务
+GET    /api/admin/applications
+POST   /api/admin/applications/{id}/approve
+POST   /api/admin/applications/{id}/reject
+
+GET    /api/admin/clubs
+GET    /api/admin/stats
+GET    /api/admin/clubs/{id}/members
+DELETE /api/admin/clubs/{id}/members/{userId}
+
+POST   /api/admin/announcements
+PUT    /api/admin/announcements/{id}
+DELETE /api/admin/announcements/{id}
+
+POST   /api/admin/activities
+PUT    /api/admin/activities/{id}
+DELETE /api/admin/activities/{id}
 ```
 
-### POST `/api/admin/applications/{id}/reject`
-
-拒绝申请。
-
-### GET `/api/admin/clubs/{id}/members`
-
-返回社团成员：
-
-```json
-[
-  {
-    "userId": 2,
-    "username": "zhangsan",
-    "name": "张三",
-    "joinedAt": "2026-09-10 12:00:00"
-  }
-]
-```
-
-### DELETE `/api/admin/clubs/{id}/members/{userId}`
-
-把成员移出社团。
-
-### POST `/api/admin/announcements`
-
-发布公告：
+公告请求：
 
 ```json
 {
   "clubId": 1,
-  "title": "本周活动报名开始",
-  "content": "请提前十分钟到场。"
+  "title": "本周活动通知",
+  "content": "周六下午三点在活动室集合。"
 }
 ```
 
-## 页面与接口对应
+活动请求：
+
+```json
+{
+  "clubId": 1,
+  "title": "前端项目实战分享",
+  "description": "从页面结构到接口联调。",
+  "startTime": "2026-10-24 14:00:00",
+  "location": "活动室 A"
+}
+```
+
+当前不实现成员活动报名，因此没有 `activity_signup` 接口。
+
+## 页面与接口
 
 | 页面 | 接口 |
 |---|---|
 | `login.html` | `POST /api/auth/login` |
 | `register.html` | `POST /api/auth/register` |
-| `home.html` | `GET /api/clubs` |
-| `my-applications.html` | `GET /api/applications/my` |
-| `applications.html` | `GET /api/admin/applications`、审批接口 |
-| `club-member.html` | 社团详情和公告接口 |
-| `club-admin.html` | 社团、成员、公告管理接口 |
-| `personal-member.html` | `/api/me/clubs`、`/api/me/announcements` |
-| `personal-admin.html` | 待审批申请和管理社团接口 |
+| `home.html` | `GET /api/clubs`、`POST /api/applications` |
+| `my-applications.html` | `GET /api/auth/me`、`GET /api/applications/my`、`GET /api/me/clubs` |
+| `applications.html` | `GET /api/admin/applications`、审批接口、`GET /api/admin/stats` |
+| `club-member.html` | 社团详情、公告、活动接口 |
+| `club-admin.html` | 社团详情、成员、公告、活动管理接口 |
+| `personal-member.html` | 当前用户、我的申请、我的社团、最新公告 |
+| `personal-admin.html` | 管理员统计、待审批申请、全部社团、个人资料 |
 
-## 接入顺序
+## 权限
 
-1. 把 `jdbc.properties` 配置放在服务器本地。
-2. 执行 `database/schema.sql` 和 `database/seed.sql`。
-3. 将 `LoginServlet` 从纯文本返回值改成 JSON。
-4. 增加社团、申请、公告、成员 Servlet。
-5. 把原型页面里的静态数据替换成 `fetch` 返回的数据。
-6. 管理员接口统一做 Session 角色校验，不能只靠前端隐藏按钮。
+```text
+未登录：只能访问登录、注册
+USER：社团浏览、申请加入、个人数据
+ADMIN：申请审批、成员管理、公告管理、活动管理
+```
 
-## 重要原则
+管理员接口由 `ApiServlet` 在服务端检查 Session 角色，不能只依赖前端隐藏按钮。
 
-- 前端不能直接连接 MySQL。
-- 真实数据库密码不能出现在 HTML 或 JavaScript 中。
-- 管理员权限必须在后端 Servlet/Filter 中再次检查。
-- 审批入团必须使用数据库事务。
-- 所有 SQL 使用 `PreparedStatement`。
+## 数据库
+
+```text
+database/schema.sql
+database/seed.sql
+```
+
+当前表：
+
+```text
+sys_user
+club
+club_member
+application
+announcement
+activity
+```

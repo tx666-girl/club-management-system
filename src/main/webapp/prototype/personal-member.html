@@ -37,13 +37,23 @@
       <div class="profile-main">
         <span class="avatar">张</span>
         <div>
-          <h2>张三</h2>
-          <p>ID:123456 · 2024 级 · 计算机科学与技术</p>
+          <h2 id="profileName">张三</h2>
+          <p id="profileMeta">ID:123456 · 2024 级 · 普通成员</p>
         </div>
       </div>
       <div class="profile-actions">
-
-        <a class="button button-ghost" href="login.html">
+        <button id="editProfileButton" class="button button-secondary" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>
+          </svg>
+          修改个人信息
+        </button>
+        <button id="changePasswordButton" class="button button-secondary" type="button">
+          修改密码
+        </button>
+        <button id="pageLogout" class="button button-ghost" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -51,15 +61,67 @@
             <path d="M21 12H9"/>
           </svg>
           退出登录
-        </a>
+        </button>
+      </div>
+    </section>
+
+    <section id="profileEditPanel" class="panel" hidden style="margin-top: 18px;">
+      <div class="panel-head">
+        <div>
+          <h2>修改个人信息</h2>
+          <p>修改姓名、学号和年级。</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form id="profileForm" class="form-grid">
+          <div class="form-field">
+            <label for="profileNameInput">姓名</label>
+            <input id="profileNameInput" type="text" required>
+          </div>
+          <div class="form-field">
+            <label for="profileStudentNo">学号</label>
+            <input id="profileStudentNo" type="text">
+          </div>
+          <div class="form-field">
+            <label for="profileGrade">年级</label>
+            <input id="profileGrade" type="text">
+          </div>
+          <div class="form-field">
+            <button class="button button-primary" type="submit">保存</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="passwordPanel" class="panel" hidden style="margin-top: 18px;">
+      <div class="panel-head">
+        <div>
+          <h2>修改密码</h2>
+          <p>请输入原密码和新密码。</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form id="passwordForm" class="form-grid">
+          <div class="form-field">
+            <label for="oldPassword">原密码</label>
+            <input id="oldPassword" type="password" required>
+          </div>
+          <div class="form-field">
+            <label for="newPassword">新密码</label>
+            <input id="newPassword" type="password" required>
+          </div>
+          <div class="form-field">
+            <button class="button button-primary" type="submit">保存新密码</button>
+          </div>
+        </form>
       </div>
     </section>
 
     <section class="stats" style="margin-top: 18px;" aria-label="个人统计">
-      <div class="stat"><span>加入社团</span><strong>2</strong></div>
-      <div class="stat"><span>申请中</span><strong>1</strong></div>
-      <div class="stat"><span>参加活动</span><strong>6</strong></div>
-      <div class="stat"><span>收到公告</span><strong>12</strong></div>
+      <div class="stat"><span>加入社团</span><strong id="memberClubCount">0</strong></div>
+      <div class="stat"><span>申请中</span><strong id="memberPendingCount">0</strong></div>
+      <div class="stat"><span>申请记录</span><strong id="memberApplicationCount">0</strong></div>
+      <div class="stat"><span>最近公告</span><strong id="memberAnnouncementCount">0</strong></div>
     </section>
 
     <div class="split">
@@ -72,7 +134,7 @@
           <a class="button button-secondary" href="my-applications.html">查看申请</a>
         </div>
         <div class="panel-body">
-          <div class="managed-list">
+          <div id="myClubs" class="managed-list">
             <article class="managed-item">
               <h3>计算机协会</h3>
               <p>学术科技 · 128 名成员</p>
@@ -99,7 +161,7 @@
           </div>
         </div>
         <div class="panel-body">
-          <div class="notice-list">
+          <div id="latestAnnouncements" class="notice-list">
             <article class="notice-item">
               <h3>本周活动报名开始</h3>
               <p>计算机协会技术分享活动开放报名。</p>
@@ -115,5 +177,8 @@
       </section>
     </div>
   </main>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/personal-member.js"></script>
 </body>
 </html>

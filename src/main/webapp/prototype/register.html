@@ -20,10 +20,22 @@
       <h1>创建账号</h1>
       <p>注册后可以申请加入社团并查看申请进度。</p>
 
-      <form class="auth-form" action="login.html" method="get">
+      <form id="registerForm" class="auth-form">
         <div class="form-field">
           <label for="username">账号</label>
           <input id="username" name="username" type="text" placeholder="请输入账号">
+        </div>
+        <div class="form-field">
+          <label for="name">姓名</label>
+          <input id="name" name="name" type="text" placeholder="请输入姓名">
+        </div>
+        <div class="form-field">
+          <label for="studentNo">学号</label>
+          <input id="studentNo" name="studentNo" type="text" placeholder="请输入学号">
+        </div>
+        <div class="form-field">
+          <label for="grade">年级</label>
+          <input id="grade" name="grade" type="text" placeholder="例如 2024级">
         </div>
         <div class="form-field">
           <label for="password">密码</label>
@@ -38,9 +50,12 @@
           <button class="button button-primary" type="submit">注册</button>
         </div>
       </form>
+      <p id="registerMessage" class="message" role="alert"></p>
     </section>
 
     <p class="auth-footer">校园社团协作平台</p>
   </main>
+  <script src="js/api.js"></script>
+  <script src="js/register.js"></script>
 </body>
 </html>

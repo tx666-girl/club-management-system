@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * 权限验证过滤器。
+ * 页面访问过滤器和 API 放行规则。
  *
- * HTML 原型位于 /prototype/ 下，原型页面和静态资源需要允许直接访问，
- * 真正的登录和角色权限仍由 Servlet 与后端接口负责。
+ * /api/* 的登录和角色判断由 ApiServlet 负责；
+ * HTML 原型、CSS、JS 和图片需要允许浏览器直接加载。
  */
 @WebFilter("/*")
 public class PermissionFilter extends HttpFilter {
@@ -28,8 +28,7 @@ public class PermissionFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest request,
                             HttpServletResponse response,
                             FilterChain chain) throws IOException, ServletException {
-        String requestUri = request.getRequestURI();
-        String uri = requestUri.replace(request.getContextPath(), "");
+        String uri = request.getRequestURI().replace(request.getContextPath(), "");
 
         if (isPublicPath(uri)) {
             chain.doFilter(request, response);
@@ -58,6 +57,8 @@ public class PermissionFilter extends HttpFilter {
         return "/".equals(uri)
                 || "/index.html".equals(uri)
                 || "/login".equals(uri)
+                || "/api".equals(uri)
+                || uri.startsWith("/api/")
                 || "/prototype".equals(uri)
                 || uri.startsWith("/prototype/")
                 || uri.startsWith("/js");

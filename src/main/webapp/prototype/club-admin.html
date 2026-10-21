@@ -39,10 +39,10 @@
     <section class="club-hero">
       <div class="hero-actions">
         <div>
-          <span class="tag">学术科技</span>
-          <h1>计算机协会</h1>
-          <p>面向喜欢编程、网络安全和产品设计的同学，定期组织技术分享、项目实践和校园技术交流。</p>
-          <div class="hero-meta">
+          <span id="clubCategory" class="tag">学术科技</span>
+          <h1 id="clubName">计算机协会</h1>
+          <p id="clubDescription">面向喜欢编程、网络安全和产品设计的同学，定期组织技术分享、项目实践和校园技术交流。</p>
+          <div id="clubMeta" class="hero-meta">
             <span>128 名成员</span>
             <span>本周六 14:00 · 活动室 A</span>
             <span>负责人：李同学</span>
@@ -59,25 +59,27 @@
             </svg>
             成员管理
           </a>
-          <button class="button button-secondary" type="button">
+          <a class="button button-secondary" href="#activityForm">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M12 5v14M5 12h14"/>
             </svg>
             发布活动
-          </button>
-          <button class="button button-danger" type="button">
+          </a>
+          <a class="button button-danger" href="#activities">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M3 6h18"/>
               <path d="M8 6V4h8v2"/>
               <path d="m19 6-1 15H6L5 6"/>
             </svg>
-            删除活动
-          </button>
+            活动管理
+          </a>
         </div>
       </div>
     </section>
+
+    <p id="clubAdminMessage" class="message" role="alert"></p>
 
     <div class="split">
       <section class="panel" id="activities">
@@ -89,7 +91,7 @@
           <span class="tag">3 场活动</span>
         </div>
         <div class="panel-body">
-          <div class="activity-list">
+          <div id="activityList" class="activity-list">
             <article class="activity-item">
               <h3>前端项目实战分享</h3>
               <p>从页面结构到接口联调，完成一个可运行的校园活动页面。</p>
@@ -117,7 +119,7 @@
           </div>
         </div>
         <div class="panel-body">
-          <div class="notice-list">
+          <div id="announcementList" class="notice-list">
             <article class="notice-item">
               <h3>本周活动报名开始</h3>
               <p>本周技术分享活动开放报名，请提前十分钟到场。</p>
@@ -133,13 +135,71 @@
       </section>
     </div>
 
+    <div class="split" style="margin-top: 18px;">
+      <section id="announcementForm" class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>发布公告</h2>
+            <p>公告会显示在社团详情和成员个人中心。</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <form id="announcementCreateForm" class="form-grid">
+            <div class="form-field full">
+              <label for="announcementTitle">公告标题</label>
+              <input id="announcementTitle" type="text" required>
+            </div>
+            <div class="form-field full">
+              <label for="announcementContent">公告内容</label>
+              <textarea id="announcementContent" required></textarea>
+            </div>
+            <div class="form-field full">
+              <button class="button button-primary" type="submit">发布公告</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="activityForm" class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>发布活动</h2>
+            <p>当前只提供活动发布和管理，不包含成员报名。</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <form id="activityCreateForm" class="form-grid">
+            <div class="form-field full">
+              <label for="activityTitle">活动标题</label>
+              <input id="activityTitle" type="text" required>
+            </div>
+            <div class="form-field full">
+              <label for="activityDescription">活动介绍</label>
+              <textarea id="activityDescription" required></textarea>
+            </div>
+            <div class="form-field">
+              <label for="activityStartTime">开始时间</label>
+              <input id="activityStartTime" type="datetime-local" required>
+            </div>
+            <div class="form-field">
+              <label for="activityLocation">活动地点</label>
+              <input id="activityLocation" type="text" required>
+            </div>
+            <div class="form-field full">
+              <button class="button button-primary" type="submit">发布活动</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+
     <section class="panel" id="members" style="margin-top: 18px;">
       <div class="panel-head">
         <div>
           <h2>成员管理</h2>
           <p>管理员可以移除社团成员。</p>
         </div>
-        <span class="tag">128 名成员</span>
+        <span id="memberCount" class="tag">0 名成员</span>
       </div>
       <div class="table-wrap">
         <table class="data-table">
@@ -151,7 +211,7 @@
               <th>操作</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="memberTableBody">
             <tr>
               <td>张三</td>
               <td>2026-09-10</td>
@@ -175,5 +235,8 @@
       </div>
     </section>
   </main>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/club-admin.js"></script>
 </body>
 </html>

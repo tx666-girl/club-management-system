@@ -31,7 +31,7 @@
           <h1>账号登录</h1>
           <p>登录后即可浏览社团、提交入团申请和管理社团。</p>
 
-          <form class="auth-form" action="home.html" method="get">
+          <form id="loginForm" class="auth-form">
             <div class="form-field">
               <label for="username">账号</label>
               <input id="username" name="username" type="text" placeholder="请输入账号">
@@ -45,17 +45,15 @@
               <button class="button button-primary" type="submit">登录</button>
             </div>
           </form>
+          <p id="loginMessage" class="message" role="alert"></p>
 
-          <div class="auth-demo">
-            <span>原型入口</span>
-            <a href="home.html">普通成员</a>
-            <a href="admin.html">管理员原型</a>
-          </div>
         </section>
 
         <p class="auth-footer">校园社团协作平台</p>
       </div>
     </section>
   </main>
+  <script src="js/api.js"></script>
+  <script src="js/login.js"></script>
 </body>
 </html>
