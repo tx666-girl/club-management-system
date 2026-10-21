@@ -3,9 +3,13 @@ package com.zeroone.star.dao.impl;
 import com.zeroone.star.dao.ClubDao;
 import com.zeroone.star.entity.Club;
 import com.zeroone.star.entity.Member;
+import com.zeroone.star.util.DruidUtil;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +40,35 @@ public class ClubDaoImpl implements ClubDao {
 
     @Override
     public List<Member> findMembers(long clubId) {
-        throw new UnsupportedOperationException("TODO D：请实现 ClubDao.findMembers");
+        String sql = "SELECT u.id, u.username, u.name, u.student_no, cm.joined_at "
+                + "FROM club_member cm "
+                + "JOIN sys_user u ON u.id = cm.user_id "
+                + "WHERE cm.club_id = ? "
+                + "ORDER BY cm.joined_at, u.id";
+
+        List<Member> members = new ArrayList<>();
+
+        try (Connection connection = DruidUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, clubId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Member member = new Member();
+                    member.userId = resultSet.getLong("id");
+                    member.username = resultSet.getString("username");
+                    member.name = resultSet.getString("name");
+                    member.studentNo = resultSet.getString("student_no");
+                    member.joinedAt = resultSet.getString("joined_at");
+                    members.add(member);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("查询社团成员失败", e);
+        }
+
+        return members;
     }
 
     @Override
