@@ -83,7 +83,20 @@ public class ClubDaoImpl implements ClubDao {
 
     @Override
     public boolean isMember(long clubId, long userId) {
-        throw new UnsupportedOperationException("TODO D：请实现 ClubDao.isMember");
+        String sql = "SELECT 1 FROM club_member WHERE club_id = ? AND user_id = ? LIMIT 1";
+
+        try (Connection connection = DruidUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, clubId);
+            statement.setLong(2, userId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("判断社团成员失败", e);
+        }
     }
 
     @Override
