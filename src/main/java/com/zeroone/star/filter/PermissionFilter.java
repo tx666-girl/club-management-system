@@ -14,13 +14,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * <p>
- * 描述：权限验证过滤器
- * </p>
- * <p>版权：&copy;01星球</p>
- * <p>地址：01星球总部</p>
- * @author 阿伟学长
- * @version 1.0.0
+ * 页面访问过滤器和 API 放行规则。
+ *
+ * /api/* 的登录和角色判断由 ApiServlet 负责；
+ * HTML 原型、CSS、JS 和图片需要允许浏览器直接加载。
  */
 @WebFilter("/*")
 public class PermissionFilter extends HttpFilter {
@@ -31,28 +28,39 @@ public class PermissionFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest request,
                             HttpServletResponse response,
                             FilterChain chain) throws IOException, ServletException {
-        String requestUri = request.getRequestURI();
-        String uri = requestUri.replace(request.getContextPath(), "");
-        if ("/".equals(uri) || "/login".equals(uri) || uri.endsWith("index.jsp") || uri.startsWith("/js")) {
+        String uri = request.getRequestURI().replace(request.getContextPath(), "");
+
+        if (isPublicPath(uri)) {
             chain.doFilter(request, response);
-        } else {
-            HttpSession session = request.getSession();
-            String username = (String) session.getAttribute("username");
-            if (username == null) {
-                System.out.println("登录超时");
-                response.sendRedirect("index.jsp");
-            } else {
-                //这里就应该去数据库查询当前登录用户是否具有访问这个URL地址的权限
-                if (userService.hasPermission(username, uri)) {
-                    chain.doFilter(request, response);
-                } else {
-                    response.setCharacterEncoding("UTF-8");
-                    PrintWriter writer = response.getWriter();
-                    writer.print("没有访问权限");
-                    writer.flush();
-                    writer.close();
-                }
-            }
+            return;
         }
+
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            response.sendRedirect(request.getContextPath() + "/prototype/login.html");
+            return;
+        }
+
+        if (userService.hasPermission(username, uri)) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter writer = response.getWriter()) {
+            writer.print("没有访问权限");
+        }
+    }
+
+    private boolean isPublicPath(String uri) {
+        return "/".equals(uri)
+                || "/index.html".equals(uri)
+                || "/login".equals(uri)
+                || "/api".equals(uri)
+                || uri.startsWith("/api/")
+                || "/prototype".equals(uri)
+                || uri.startsWith("/prototype/")
+                || uri.startsWith("/js");
     }
 }

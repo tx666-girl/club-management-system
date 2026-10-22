@@ -2,34 +2,89 @@ package com.zeroone.star.dao.impl;
 
 import com.zeroone.star.dao.UserDao;
 import com.zeroone.star.entity.User;
+import com.zeroone.star.util.DruidUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
- * <p>
- * 描述：用户操作接口实现
- * </p>
- * <p>版权：&copy;01星球</p>
- * <p>地址：01星球总部</p>
- * @author 阿伟学长
- * @version 1.0.0
+ * 用户 DAO 实现练习。
+ *
+ * <p>实现前先阅读 UserDao 中每个方法的注释。
+ * 本类只允许写 JDBC 数据访问代码，不负责判断登录密码是否正确。</p>
+ *
+ * <p>任务 A：用户查询；任务 B：用户新增和修改。</p>
  */
 public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByUsername(String username) {
-        // TODO:硬编码测试获取用户信息
-        if ("admin".equals(username)) {
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword("123456");
-            user.setName("王三石");
-            return user;
+        String sql = "SELECT id, username, password, name, student_no, grade, role, status, created_at FROM sys_user WHERE username = ?";
+        try (Connection conn = DruidUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return resultToUser(rs);
+                }
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("查用户失败", e);
         }
-        return null;
+    }
+
+    @Override
+    public User getUserById(long id) {
+        String sql = "SELECT id, username, password, name, student_no, grade, role, status, created_at FROM sys_user WHERE id = ?";
+        try (Connection conn = DruidUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return resultToUser(rs);
+                }
+                return null;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("按id查询用户异常", e);
+        }
+    }
+
+    @Override
+    public long createUser(User user) {
+        throw new UnsupportedOperationException("TODO B：请实现 UserDao.createUser");
+    }
+
+    @Override
+    public void updateProfile(long id, String name, String studentNo, String grade) {
+        throw new UnsupportedOperationException("TODO B：请实现 UserDao.updateProfile");
+    }
+
+    @Override
+    public void updatePassword(long id, String password) {
+        throw new UnsupportedOperationException("TODO B：请实现 UserDao.updatePassword");
     }
 
     @Override
     public Integer getUrlCount(String username, String url) {
-        // TODO:硬编码获取实现
         return 1;
+    }
+
+    private User resultToUser(ResultSet rs) throws SQLException {
+        User u = new User();
+        u.setId(rs.getLong("id"));
+        u.setUsername(rs.getString("username"));
+        u.setPassword(rs.getString("password"));
+        u.setName(rs.getString("name"));
+        u.setStudentNo(rs.getString("student_no"));
+        u.setGrade(rs.getString("grade"));
+        u.setRole(rs.getString("role"));
+        u.setStatus(rs.getString("status"));
+        u.setCreatedAt(rs.getTimestamp("created_at").toString());
+        return u;
     }
 }
