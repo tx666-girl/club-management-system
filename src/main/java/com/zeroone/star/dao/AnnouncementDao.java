@@ -46,6 +46,7 @@ public interface AnnouncementDao {
      */
     List<Announcement> latestForUser(long userId, int limit);
 
+
     /**
      * 任务 G：发布一条公告。
      *

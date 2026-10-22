@@ -12,4 +12,5 @@ public class Announcement {
     public String content;
     public String publisherName;
     public String createdAt;
+    public long createdBy;
 }

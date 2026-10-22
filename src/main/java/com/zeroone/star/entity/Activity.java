@@ -15,4 +15,5 @@ public class Activity {
     public String location;
     public String publisherName;
     public String createdAt;
+    public long createdBy;
 }
