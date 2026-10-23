@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人中心 - 管理员</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="home.html">
+      <span class="brand-mark" aria-hidden="true">社</span>
+      <span>社团管理系统</span>
+    </a>
+    <nav class="nav">
+      <a class="nav-link" href="home.html">首页</a>
+      <a class="nav-link" href="applications.html">申请审批</a>
+      <a class="nav-link active" href="personal-admin.html">个人中心</a>
+    </nav>
+    <div class="user-menu">
+      <span class="avatar">张</span>
+      <span>张三</span>
+      <span class="role-pill">管理员</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-heading">
+      <div>
+        <h1>个人中心</h1>
+        <p>管理你负责的社团和处理待审批事项。</p>
+      </div>
+      <span class="tag">管理员</span>
+    </div>
+
+    <section class="profile-summary">
+      <div class="profile-main">
+        <span class="avatar">张</span>
+        <div>
+          <h2 id="profileName">张三</h2>
+          <p id="profileMeta">ID:123456 · 2024 级 · 管理员</p>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button id="editProfileButton" class="button button-secondary" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>
+          </svg>
+          修改个人信息
+        </button>
+        <button id="changePasswordButton" class="button button-secondary" type="button">
+          修改密码
+        </button>
+        <button id="pageLogout" class="button button-ghost" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <path d="m16 17 5-5-5-5"/>
+            <path d="M21 12H9"/>
+          </svg>
+          退出登录
+        </button>
+      </div>
+    </section>
+
+    <section id="profileEditPanel" class="panel" hidden style="margin-top: 18px;">
+      <div class="panel-head">
+        <div>
+          <h2>修改个人信息</h2>
+          <p>修改姓名、学号和年级。</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form id="profileForm" class="form-grid">
+          <div class="form-field">
+            <label for="profileNameInput">姓名</label>
+            <input id="profileNameInput" type="text" required>
+          </div>
+          <div class="form-field">
+            <label for="profileStudentNo">学号</label>
+            <input id="profileStudentNo" type="text">
+          </div>
+          <div class="form-field">
+            <label for="profileGrade">年级</label>
+            <input id="profileGrade" type="text">
+          </div>
+          <div class="form-field">
+            <button class="button button-primary" type="submit">保存</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="passwordPanel" class="panel" hidden style="margin-top: 18px;">
+      <div class="panel-head">
+        <div>
+          <h2>修改密码</h2>
+          <p>请输入原密码和新密码。</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form id="passwordForm" class="form-grid">
+          <div class="form-field">
+            <label for="oldPassword">原密码</label>
+            <input id="oldPassword" type="password" required>
+          </div>
+          <div class="form-field">
+            <label for="newPassword">新密码</label>
+            <input id="newPassword" type="password" required>
+          </div>
+          <div class="form-field">
+            <button class="button button-primary" type="submit">保存新密码</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="stats" style="margin-top: 18px;" aria-label="管理员统计">
+      <div class="stat"><span>管理社团</span><strong id="adminClubCount">0</strong></div>
+      <div class="stat"><span>管理活动</span><strong id="adminActivityCount">0</strong></div>
+      <div class="stat"><span>待审批</span><strong id="adminPendingCount">0</strong></div>
+      <div class="stat"><span>社团成员</span><strong id="adminMemberCount">0</strong></div>
+    </section>
+
+    <div class="split">
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>我管理的社团</h2>
+            <p>进入社团后可以发布活动和管理成员。</p>
+          </div>
+          <span class="tag">2 个社团</span>
+        </div>
+        <div class="panel-body">
+          <div id="managedClubs" class="managed-list">
+            <article class="managed-item">
+              <h3>篮球社团</h3>
+              <p>体育运动 · 74 名成员 · 3 场活动</p>
+              <div class="card-actions" style="margin-top: 10px;">
+                <a class="button button-primary" href="club-admin.html">管理社团</a>
+              </div>
+            </article>
+            <article class="managed-item">
+              <h3>足球社团</h3>
+              <p>体育运动 · 68 名成员 · 2 场活动</p>
+              <div class="card-actions" style="margin-top: 10px;">
+                <a class="button button-primary" href="club-admin.html">管理社团</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>最近待审批</h2>
+            <p>来自普通用户的入团申请。</p>
+          </div>
+          <a class="button button-secondary" href="applications.html">全部申请</a>
+        </div>
+        <div class="panel-body">
+          <div id="adminPendingList" class="notice-list">
+            <article class="notice-item">
+              <h3>李四 · 计算机协会</h3>
+              <p>入团申请，等待管理员处理。</p>
+              <div class="notice-meta"><span>今天 09:30</span><span class="status pending">待审批</span></div>
+            </article>
+            <article class="notice-item">
+              <h3>王五 · 摄影社</h3>
+              <p>入团申请，等待管理员处理。</p>
+              <div class="notice-meta"><span>今天 10:12</span><span class="status pending">待审批</span></div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/personal-admin.js"></script>
+</body>
+</html>
