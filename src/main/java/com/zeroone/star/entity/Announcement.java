@@ -12,8 +12,5 @@ public class Announcement {
     public String content;
     public String publisherName;
     public String createdAt;
-<<<<<<< HEAD
     public long createdBy;
-=======
->>>>>>> feature/dao-a-user-query
 }

@@ -15,8 +15,5 @@ public class Activity {
     public String location;
     public String publisherName;
     public String createdAt;
-<<<<<<< HEAD
     public long createdBy;
-=======
->>>>>>> feature/dao-a-user-query
 }
