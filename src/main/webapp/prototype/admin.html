@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>管理员原型 - 社团管理系统</title>
+  <title>管理中心 - 社团管理系统</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="home.html">
+    <a class="brand" href="admin.html">
       <span class="brand-mark" aria-hidden="true">社</span>
       <span>社团管理系统</span>
     </a>
     <nav class="nav">
-      <a class="nav-link" href="home.html">首页</a>
-      <a class="nav-link active" href="admin.html">管理员原型</a>
+      <a class="nav-link active" href="admin.html">管理中心</a>
+      <a class="nav-link" href="applications.html">申请审批</a>
       <a class="nav-link" href="personal-admin.html">个人中心</a>
     </nav>
     <div class="user-menu">
@@ -27,33 +27,46 @@
   <main class="page">
     <div class="page-heading">
       <div>
-        <h1>管理员界面原型</h1>
-        <p>集中查看管理员需要使用的三个核心界面。</p>
+        <h1>管理中心</h1>
+        <p>集中处理审批、社团管理和个人事务。</p>
       </div>
       <span class="tag">管理员视角</span>
     </div>
 
-    <section class="entry-grid">
-      <article class="entry-card">
-        <span class="brand-mark" aria-hidden="true">审</span>
-        <h2>申请审批</h2>
-        <p>查看普通用户的入团申请，执行通过或驳回操作。</p>
-        <a class="button button-primary" href="applications.html">打开申请审批</a>
-      </article>
+    <p id="adminMessage" class="message" role="alert"></p>
 
-      <article class="entry-card">
-        <span class="brand-mark" aria-hidden="true">社</span>
-        <h2>社团管理</h2>
-        <p>进入社团详情，发布活动、查看公告并管理成员。</p>
-        <a class="button button-primary" href="club-admin.html">打开社团管理</a>
-      </article>
+    <section class="stats" aria-label="管理统计">
+      <div class="stat"><span>社团总数</span><strong id="adminClubCount">0</strong></div>
+      <div class="stat"><span>待审批申请</span><strong id="adminPendingCount">0</strong></div>
+      <div class="stat"><span>活动总数</span><strong id="adminActivityCount">0</strong></div>
+      <div class="stat"><span>社团成员</span><strong id="adminMemberCount">0</strong></div>
+    </section>
 
-      <article class="entry-card">
-        <span class="brand-mark" aria-hidden="true">我</span>
-        <h2>管理员个人中心</h2>
-        <p>查看管理的社团、管理活动和待审批事项。</p>
-        <a class="button button-primary" href="personal-admin.html">打开个人中心</a>
-      </article>
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>全部社团</h2>
+          <p>选择一个社团，进入社团管理页面。</p>
+        </div>
+        <a class="button button-secondary" href="applications.html">查看待审批申请</a>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>社团名称</th>
+              <th>分类</th>
+              <th>成员数量</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="adminClubTableBody">
+            <tr>
+              <td colspan="4" class="empty-text">正在加载社团...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   </main>
   <script src="js/api.js"></script>

@@ -8,7 +8,7 @@
 |---|---|
 | `login.html` | 登录 |
 | `register.html` | 注册 |
-| `admin.html` | 管理员功能入口 |
+| `admin.html` | 管理中心 |
 | `home.html` | 全部社团分类 |
 | `my-applications.html` | 普通成员查看入团申请 |
 | `applications.html` | 管理员审批入团/创建社团申请 |

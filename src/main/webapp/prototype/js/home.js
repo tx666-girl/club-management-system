@@ -5,10 +5,8 @@
   }
 
   if (user.role === "ADMIN") {
-    document.querySelector(".nav").innerHTML =
-      '<a class="nav-link active" href="home.html">首页</a>' +
-      '<a class="nav-link" href="admin.html">管理员原型</a>' +
-      '<a class="nav-link" href="personal-admin.html">个人中心</a>';
+    location.replace("admin.html");
+    return;
   }
 
   const params = new URLSearchParams(location.search);

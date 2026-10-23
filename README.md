@@ -108,6 +108,6 @@ src/main/webapp/prototype/docs/API.md
 | `applications.html` | 管理员审批入团申请 |
 | `club-admin.html` | 管理员管理社团成员、公告和活动 |
 | `personal-admin.html` | 管理员个人中心 |
-| `admin.html` | 管理员功能入口 |
+| `admin.html` | 管理中心 |
 
 成员活动报名暂未实现，其他页面操作均已连接后端接口。
