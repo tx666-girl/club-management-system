@@ -78,7 +78,27 @@ public class ClubDaoImpl implements ClubDao {
 
     @Override
     public boolean addMember(Connection connection, long clubId, long userId) throws SQLException {
-        throw new UnsupportedOperationException("TODO D：请实现 ClubDao.addMember");
+        String insertSql = "INSERT IGNORE INTO club_member (club_id, user_id) VALUES (?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(insertSql)) {
+            statement.setLong(1, clubId);
+            statement.setLong(2, userId);
+
+            int inserted = statement.executeUpdate();
+            if (inserted == 0) {
+                // 已经是成员了，直接返回 false，不增加计数
+                return false;
+            }
+        }
+
+        String updateSql = "UPDATE club SET member_count = member_count + 1 WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(updateSql)) {
+            statement.setLong(1, clubId);
+            statement.executeUpdate();
+        }
+
+        return true;
     }
 
     @Override
