@@ -4,10 +4,7 @@ import com.zeroone.star.dao.UserDao;
 import com.zeroone.star.entity.User;
 import com.zeroone.star.util.DruidUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * 用户 DAO 实现练习。
@@ -58,14 +55,14 @@ public class UserDaoImpl implements UserDao {
     public long createUser(User user){
        String sql = "insert into sys_user (username, password, name, student_no, grade, role, status) VALUES (?,?,?,?,?,?,?)";
         try(Connection conn = DruidUtil.getConnection();
-           PreparedStatement ps = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)){
+           PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             ps.setString(1,user.getUsername());
-            ps.setString(1,user.getPassword());
-            ps.setString(1,user.geName());
-            ps.setString(1,user.getStudentNo());
-            ps.setString(1,user.getGrade());
-            ps.setString(1,user.getRole());
-            ps.setString(1,user.getStatus());
+            ps.setString(2,user.getPassword());
+            ps.setString(3,user.getName());
+            ps.setString(4,user.getStudentNo());
+            ps.setString(5,user.getGrade());
+            ps.setString(6,user.getRole());
+            ps.setString(7,user.getStatus());
             ps.executeUpdate();
             try(ResultSet rs = ps.getGeneratedKeys()){
                 if(rs.next()){
@@ -86,7 +83,7 @@ public class UserDaoImpl implements UserDao {
              ps.setString(1,name);
              ps.setString(2,studentNo);
              ps.setString(3,grade);
-             ps.setString(4,id);
+             ps.setLong(4,id);
              ps.executeUpdate();
          }catch(SQLException e){
             throw new RuntimeException("修改用户资料失败",e);
@@ -99,7 +96,7 @@ public class UserDaoImpl implements UserDao {
         try(Connection conn = DruidUtil.getConnection();
            PreparedStatement ps = conn.prepareStatement(sql)){
              ps.setString(1,password);
-             ps.setString(2,id);
+             ps.setLong(2,id);
              ps.executeUpdate();
         }catch(SQLException e){
             throw new RuntimeException("修改密码失败",e);
