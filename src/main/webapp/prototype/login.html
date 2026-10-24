@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 - 社团管理系统</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-split-page">
+  <main class="auth-split">
+    <section class="auth-visual">
+      <img src="assets/login-hero.svg" alt="阳光校园里的学生与社团活动">
+      <div class="auth-visual-content">
+        <span class="tag">校园社团协作平台</span>
+        <h2>让兴趣找到同伴</h2>
+        <p>浏览社团、申请加入、参与活动，在校园里遇见同频的人。</p>
+      </div>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-shell">
+        <header class="auth-brand">
+          <span class="brand-mark" aria-hidden="true">社</span>
+          <div>
+            <strong>社团管理系统</strong>
+            <span>Club Management System</span>
+          </div>
+        </header>
+
+        <section class="auth-card">
+          <h1>账号登录</h1>
+          <p>登录后即可浏览社团、提交入团申请和管理社团。</p>
+
+          <form id="loginForm" class="auth-form">
+            <div class="form-field">
+              <label for="username">账号</label>
+              <input id="username" name="username" type="text" placeholder="请输入账号">
+            </div>
+            <div class="form-field">
+              <label for="password">密码</label>
+              <input id="password" name="password" type="password" placeholder="请输入密码">
+            </div>
+            <div class="auth-actions">
+              <a class="button button-secondary" href="register.html">注册</a>
+              <button class="button button-primary" type="submit">登录</button>
+            </div>
+          </form>
+          <p id="loginMessage" class="message" role="alert"></p>
+
+        </section>
+
+        <p class="auth-footer">校园社团协作平台</p>
+      </div>
+    </section>
+  </main>
+  <script src="js/api.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

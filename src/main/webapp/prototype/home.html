@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全部社团 - 社团管理系统</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="home.html">
+      <span class="brand-mark" aria-hidden="true">社</span>
+      <span>社团管理系统</span>
+    </a>
+    <nav class="nav">
+      <a class="nav-link active" href="home.html">首页</a>
+      <a class="nav-link" href="my-applications.html">我的申请</a>
+      <a class="nav-link" href="personal-member.html">个人中心</a>
+    </nav>
+    <div class="user-menu">
+      <span class="avatar">张</span>
+      <span>张三</span>
+      <span class="role-pill">普通成员</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-heading">
+      <div>
+        <h1>全部社团分类</h1>
+        <p>浏览校园社团，找到你感兴趣的活动和伙伴。</p>
+      </div>
+      <span id="clubCount" class="tag">共 8 个社团</span>
+    </div>
+
+    <div class="filters" aria-label="社团分类">
+      <a class="chip active" href="home.html">全部</a>
+      <a class="chip" href="home.html?category=tech">学术科技</a>
+      <a class="chip" href="home.html?category=art">文化艺术</a>
+      <a class="chip" href="home.html?category=sport">体育运动</a>
+      <a class="chip" href="home.html?category=volunteer">志愿公益</a>
+    </div>
+
+    <p id="homeMessage" class="message" role="alert"></p>
+    <section id="clubGrid" class="club-grid" aria-label="社团列表">
+      <article class="club-card" data-category="tech">
+        <div class="club-cover"><img src="assets/clubs/tech.svg" alt="计算机协会插图"></div>
+        <div class="club-card-body">
+          <span class="tag">学术科技</span>
+          <h3>计算机协会</h3>
+          <p>技术分享、项目实践和编程交流，适合喜欢动手实践的同学。</p>
+          <div class="club-meta"><span>128 名成员</span><span>每周活动</span></div>
+          <div class="card-actions">
+            <a class="button button-secondary" href="club-member.html">查看详情</a>
+            <a class="button button-primary" href="my-applications.html">申请加入</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="club-card" data-category="art">
+        <div class="club-cover"><img src="assets/clubs/photo.svg" alt="摄影社插图"></div>
+        <div class="club-card-body">
+          <span class="tag blue">文化艺术</span>
+          <h3>摄影社</h3>
+          <p>校园外拍、作品交流和摄影基础课程，记录生活里的光。</p>
+          <div class="club-meta"><span>86 名成员</span><span>每月外拍</span></div>
+          <div class="card-actions">
+            <a class="button button-secondary" href="club-member.html">查看详情</a>
+            <a class="button button-primary" href="my-applications.html">申请加入</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="club-card" data-category="sport">
+        <div class="club-cover"><img src="assets/clubs/badminton.svg" alt="羽毛球社插图"></div>
+        <div class="club-card-body">
+          <span class="tag amber">体育运动</span>
+          <h3>羽毛球社</h3>
+          <p>固定训练、友谊赛和新手教学，欢迎零基础同学加入。</p>
+          <div class="club-meta"><span>96 名成员</span><span>每周训练</span></div>
+          <div class="card-actions">
+            <a class="button button-secondary" href="club-member.html">查看详情</a>
+            <a class="button button-primary" href="my-applications.html">申请加入</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="club-card" data-category="volunteer">
+        <div class="club-cover"><img src="assets/clubs/volunteer.svg" alt="青年志愿者协会插图"></div>
+        <div class="club-card-body">
+          <span class="tag amber">志愿公益</span>
+          <h3>青年志愿者协会</h3>
+          <p>校园公益、社区服务和志愿活动，用行动连接校园与社会。</p>
+          <div class="club-meta"><span>214 名成员</span><span>周末活动</span></div>
+          <div class="card-actions">
+            <a class="button button-secondary" href="club-member.html">查看详情</a>
+            <a class="button button-primary" href="my-applications.html">申请加入</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="club-card" data-category="sport">
+        <div class="club-cover"><img src="assets/clubs/basketball.svg" alt="篮球社插图"></div>
+        <div class="club-card-body">
+          <span class="tag amber">体育运动</span>
+          <h3>篮球社</h3>
+          <p>日常训练、院系联赛和观赛交流，一起在球场上挥汗。</p>
+          <div class="club-meta"><span>74 名成员</span><span>每周训练</span></div>
+          <div class="card-actions">
+            <a class="button button-secondary" href="club-member.html">查看详情</a>
+            <a class="button button-primary" href="my-applications.html">申请加入</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="club-card" data-category="sport">
+        <div class="club-cover"><img src="assets/clubs/football.svg" alt="足球社插图"></div>
+        <div class="club-card-body">
+          <span class="tag amber">体育运动</span>
+          <h3>足球社</h3>
+          <p>组织训练和友谊赛，适合想保持运动习惯的同学。</p>
+          <div class="club-meta"><span>68 名成员</span><span>每周训练</span></div>
+          <div class="card-actions">
+            <a class="button button-secondary" href="club-member.html">查看详情</a>
+            <a class="button button-primary" href="my-applications.html">申请加入</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="club-card" data-category="art">
+        <div class="club-cover"><img src="assets/clubs/anime.svg" alt="动漫社插图"></div>
+        <div class="club-card-body">
+          <span class="tag blue">文化艺术</span>
+          <h3>动漫社</h3>
+          <p>动画鉴赏、同人创作和校园漫展，欢迎热爱二次元的同学。</p>
+          <div class="club-meta"><span>152 名成员</span><span>每月活动</span></div>
+          <div class="card-actions">
+            <a class="button button-secondary" href="club-member.html">查看详情</a>
+            <a class="button button-primary" href="my-applications.html">申请加入</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="club-card" data-category="tech">
+        <div class="club-cover"><img src="assets/clubs/debate.svg" alt="辩论社插图"></div>
+        <div class="club-card-body">
+          <span class="tag">学术科技</span>
+          <h3>辩论社</h3>
+          <p>围绕校园和社会话题训练表达、逻辑与团队协作能力。</p>
+          <div class="club-meta"><span>47 名成员</span><span>每周讨论</span></div>
+          <div class="card-actions">
+            <a class="button button-secondary" href="club-member.html">查看详情</a>
+            <a class="button button-primary" href="my-applications.html">申请加入</a>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

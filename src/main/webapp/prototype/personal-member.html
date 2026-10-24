@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人中心 - 普通成员</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="home.html">
+      <span class="brand-mark" aria-hidden="true">社</span>
+      <span>社团管理系统</span>
+    </a>
+    <nav class="nav">
+      <a class="nav-link" href="home.html">首页</a>
+      <a class="nav-link" href="my-applications.html">我的申请</a>
+      <a class="nav-link active" href="personal-member.html">个人中心</a>
+    </nav>
+    <div class="user-menu">
+      <span class="avatar">张</span>
+      <span>张三</span>
+      <span class="role-pill">普通成员</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-heading">
+      <div>
+        <h1>个人中心</h1>
+        <p>查看你的社团信息、申请进度和最新公告。</p>
+      </div>
+      <span class="tag">普通成员</span>
+    </div>
+
+    <section class="profile-summary">
+      <div class="profile-main">
+        <span class="avatar">张</span>
+        <div>
+          <h2 id="profileName">张三</h2>
+          <p id="profileMeta">ID:123456 · 2024 级 · 普通成员</p>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <button id="editProfileButton" class="button button-secondary" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>
+          </svg>
+          修改个人信息
+        </button>
+        <button id="changePasswordButton" class="button button-secondary" type="button">
+          修改密码
+        </button>
+        <button id="pageLogout" class="button button-ghost" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <path d="m16 17 5-5-5-5"/>
+            <path d="M21 12H9"/>
+          </svg>
+          退出登录
+        </button>
+      </div>
+    </section>
+
+    <section id="profileEditPanel" class="panel" hidden style="margin-top: 18px;">
+      <div class="panel-head">
+        <div>
+          <h2>修改个人信息</h2>
+          <p>修改姓名、学号和年级。</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form id="profileForm" class="form-grid">
+          <div class="form-field">
+            <label for="profileNameInput">姓名</label>
+            <input id="profileNameInput" type="text" required>
+          </div>
+          <div class="form-field">
+            <label for="profileStudentNo">学号</label>
+            <input id="profileStudentNo" type="text">
+          </div>
+          <div class="form-field">
+            <label for="profileGrade">年级</label>
+            <input id="profileGrade" type="text">
+          </div>
+          <div class="form-field">
+            <button class="button button-primary" type="submit">保存</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="passwordPanel" class="panel" hidden style="margin-top: 18px;">
+      <div class="panel-head">
+        <div>
+          <h2>修改密码</h2>
+          <p>请输入原密码和新密码。</p>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form id="passwordForm" class="form-grid">
+          <div class="form-field">
+            <label for="oldPassword">原密码</label>
+            <input id="oldPassword" type="password" required>
+          </div>
+          <div class="form-field">
+            <label for="newPassword">新密码</label>
+            <input id="newPassword" type="password" required>
+          </div>
+          <div class="form-field">
+            <button class="button button-primary" type="submit">保存新密码</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="stats" style="margin-top: 18px;" aria-label="个人统计">
+      <div class="stat"><span>加入社团</span><strong id="memberClubCount">0</strong></div>
+      <div class="stat"><span>申请中</span><strong id="memberPendingCount">0</strong></div>
+      <div class="stat"><span>申请记录</span><strong id="memberApplicationCount">0</strong></div>
+      <div class="stat"><span>最近公告</span><strong id="memberAnnouncementCount">0</strong></div>
+    </section>
+
+    <div class="split">
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>我的社团</h2>
+            <p>你已经加入的社团。</p>
+          </div>
+          <a class="button button-secondary" href="my-applications.html">查看申请</a>
+        </div>
+        <div class="panel-body">
+          <div id="myClubs" class="managed-list">
+            <article class="managed-item">
+              <h3>计算机协会</h3>
+              <p>学术科技 · 128 名成员</p>
+              <div class="card-actions" style="margin-top: 10px;">
+                <a class="button button-secondary" href="club-member.html">查看社团</a>
+              </div>
+            </article>
+            <article class="managed-item">
+              <h3>摄影社</h3>
+              <p>文化艺术 · 86 名成员</p>
+              <div class="card-actions" style="margin-top: 10px;">
+                <a class="button button-secondary" href="club-member.html">查看社团</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>最近公告</h2>
+            <p>来自你已加入社团的通知。</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div id="latestAnnouncements" class="notice-list">
+            <article class="notice-item">
+              <h3>本周活动报名开始</h3>
+              <p>计算机协会技术分享活动开放报名。</p>
+              <div class="notice-meta"><span>计算机协会</span><span>2026-10-19</span></div>
+            </article>
+            <article class="notice-item">
+              <h3>秋季外拍集合时间</h3>
+              <p>摄影社本周日早上八点在图书馆门口集合。</p>
+              <div class="notice-meta"><span>摄影社</span><span>2026-10-18</span></div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/personal-member.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>申请审批 - 社团管理系统</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="admin.html">
+      <span class="brand-mark" aria-hidden="true">社</span>
+      <span>社团管理系统</span>
+    </a>
+    <nav class="nav">
+      <a class="nav-link" href="admin.html">管理中心</a>
+      <a class="nav-link active" href="applications.html">申请审批</a>
+      <a class="nav-link" href="personal-admin.html">个人中心</a>
+    </nav>
+    <div class="user-menu">
+      <span class="avatar">张</span>
+      <span>张三</span>
+      <span class="role-pill">管理员</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-heading">
+      <div>
+        <h1>申请审批</h1>
+        <p>处理用户的入团申请和社团创建申请。</p>
+      </div>
+      <span class="tag amber">3 条待处理</span>
+    </div>
+
+    <p id="applicationsMessage" class="message" role="alert"></p>
+
+    <section class="stats" aria-label="申请统计">
+      <div class="stat"><span>待审批</span><strong id="statPending">0</strong></div>
+      <div class="stat"><span>社团总数</span><strong id="statClubs">0</strong></div>
+      <div class="stat"><span>活动总数</span><strong id="statActivities">0</strong></div>
+      <div class="stat"><span>社团成员</span><strong id="statMembers">0</strong></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>全部用户申请列表</h2>
+          <p>通过后，用户会进入对应社团成员列表。</p>
+        </div>
+        <a class="button button-secondary" href="admin.html">返回管理中心</a>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>申请人</th>
+              <th>申请类型</th>
+              <th>申请内容</th>
+              <th>申请日期</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="applicationTableBody">
+            <tr>
+              <td>李四</td>
+              <td>入团申请</td>
+              <td>计算机协会</td>
+              <td>2026-10-20 09:30</td>
+              <td><span class="status pending">待审批</span></td>
+              <td>
+                <div class="actions">
+                  <button class="button button-primary" type="button">通过</button>
+                  <button class="button button-danger" type="button">驳回</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>王五</td>
+              <td>入团申请</td>
+              <td>摄影社</td>
+              <td>2026-10-20 10:12</td>
+              <td><span class="status pending">待审批</span></td>
+              <td>
+                <div class="actions">
+                  <button class="button button-primary" type="button">通过</button>
+                  <button class="button button-danger" type="button">驳回</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>赵六</td>
+              <td>创建新社团</td>
+              <td>校园音乐社</td>
+              <td>2026-10-19 16:45</td>
+              <td><span class="status pending">待审批</span></td>
+              <td>
+                <div class="actions">
+                  <button class="button button-primary" type="button">通过</button>
+                  <button class="button button-danger" type="button">驳回</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>陈晨</td>
+              <td>入团申请</td>
+              <td>羽毛球社</td>
+              <td>2026-10-18 14:20</td>
+              <td><span class="status approved">已通过</span></td>
+              <td><span class="muted">已处理</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/applications.js"></script>
+</body>
+</html>

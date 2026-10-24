@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计算机协会 - 社团详情</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="home.html">
+      <span class="brand-mark" aria-hidden="true">社</span>
+      <span>社团管理系统</span>
+    </a>
+    <nav class="nav">
+      <a class="nav-link active" href="home.html">首页</a>
+      <a class="nav-link" href="my-applications.html">我的申请</a>
+      <a class="nav-link" href="personal-member.html">个人中心</a>
+    </nav>
+    <div class="user-menu">
+      <span class="avatar">张</span>
+      <span>张三</span>
+      <span class="role-pill">普通成员</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-heading">
+      <a class="button button-secondary" href="home.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+        返回全部社团
+      </a>
+      <span class="status approved">已加入</span>
+    </div>
+
+    <section class="club-hero">
+      <span id="clubCategory" class="tag">学术科技</span>
+      <h1 id="clubName">计算机协会</h1>
+      <p id="clubDescription">面向喜欢编程、网络安全和产品设计的同学，定期组织技术分享、项目实践和校园技术交流。</p>
+      <div id="clubMeta" class="hero-meta">
+        <span>128 名成员</span>
+        <span>本周六 14:00 · 活动室 A</span>
+        <span>负责人：李同学</span>
+      </div>
+    </section>
+
+    <p id="clubMemberMessage" class="message" role="alert"></p>
+
+    <div class="split">
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>活动列表</h2>
+            <p>社团近期活动安排。</p>
+          </div>
+          <span class="tag">3 场活动</span>
+        </div>
+        <div class="panel-body">
+          <div id="activityList" class="activity-list">
+            <article class="activity-item">
+              <h3>前端项目实战分享</h3>
+              <p>从页面结构到接口联调，完成一个可运行的校园活动页面。</p>
+              <div class="activity-meta"><span>10 月 24 日 14:00</span><span>活动室 A</span></div>
+            </article>
+            <article class="activity-item">
+              <h3>Java Web 入门工作坊</h3>
+              <p>Servlet、JDBC 和数据库连接的基础实践。</p>
+              <div class="activity-meta"><span>10 月 31 日 19:00</span><span>实验楼 203</span></div>
+            </article>
+            <article class="activity-item">
+              <h3>校园技术开放日</h3>
+              <p>面向全校同学的社团项目展示与交流。</p>
+              <div class="activity-meta"><span>11 月 08 日 10:00</span><span>大学生活动中心</span></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>公告</h2>
+            <p>社团发布的最新通知。</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div id="announcementList" class="notice-list">
+            <article class="notice-item">
+              <h3>本周活动报名开始</h3>
+              <p>本周技术分享活动开放报名，请提前十分钟到场。</p>
+              <div class="notice-meta"><span>管理员</span><span>2026-10-19</span></div>
+            </article>
+            <article class="notice-item">
+              <h3>新成员欢迎会</h3>
+              <p>欢迎本学期加入协会的新成员，周五晚一起见面交流。</p>
+              <div class="notice-meta"><span>管理员</span><span>2026-10-16</span></div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/club-member.js"></script>
+</body>
+</html>

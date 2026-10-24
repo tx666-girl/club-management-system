@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理中心 - 社团管理系统</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="admin.html">
+      <span class="brand-mark" aria-hidden="true">社</span>
+      <span>社团管理系统</span>
+    </a>
+    <nav class="nav">
+      <a class="nav-link active" href="admin.html">管理中心</a>
+      <a class="nav-link" href="applications.html">申请审批</a>
+      <a class="nav-link" href="personal-admin.html">个人中心</a>
+    </nav>
+    <div class="user-menu">
+      <span class="avatar">张</span>
+      <span>张三</span>
+      <span class="role-pill">管理员</span>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-heading">
+      <div>
+        <h1>管理中心</h1>
+        <p>集中处理审批、社团管理和个人事务。</p>
+      </div>
+      <span class="tag">管理员视角</span>
+    </div>
+
+    <p id="adminMessage" class="message" role="alert"></p>
+
+    <section class="stats" aria-label="管理统计">
+      <div class="stat"><span>社团总数</span><strong id="adminClubCount">0</strong></div>
+      <div class="stat"><span>待审批申请</span><strong id="adminPendingCount">0</strong></div>
+      <div class="stat"><span>活动总数</span><strong id="adminActivityCount">0</strong></div>
+      <div class="stat"><span>社团成员</span><strong id="adminMemberCount">0</strong></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>全部社团</h2>
+          <p>选择一个社团，进入社团管理页面。</p>
+        </div>
+        <a class="button button-secondary" href="applications.html">查看待审批申请</a>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>社团名称</th>
+              <th>分类</th>
+              <th>成员数量</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="adminClubTableBody">
+            <tr>
+              <td colspan="4" class="empty-text">正在加载社团...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
