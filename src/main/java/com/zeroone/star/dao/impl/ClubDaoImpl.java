@@ -73,7 +73,38 @@ public class ClubDaoImpl implements ClubDao {
 
     @Override
     public void removeMember(long clubId, long userId) {
-        throw new UnsupportedOperationException("TODO D：请实现 ClubDao.removeMember");
+        String deleteSql = "DELETE FROM club_member WHERE club_id = ? AND user_id = ?";
+        String updateSql = "UPDATE club SET member_count = GREATEST(member_count - 1, 0) WHERE id = ?";
+
+        try (Connection connection = DruidUtil.getConnection()) {
+            boolean autoCommit = connection.getAutoCommit();
+            connection.setAutoCommit(false);
+
+            try {
+                int deleted;
+                try (PreparedStatement statement = connection.prepareStatement(deleteSql)) {
+                    statement.setLong(1, clubId);
+                    statement.setLong(2, userId);
+                    deleted = statement.executeUpdate();
+                }
+
+                if (deleted > 0) {
+                    try (PreparedStatement statement = connection.prepareStatement(updateSql)) {
+                        statement.setLong(1, clubId);
+                        statement.executeUpdate();
+                    }
+                }
+
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
+            } finally {
+                connection.setAutoCommit(autoCommit);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("移除社团成员失败", e);
+        }
     }
 
     @Override
