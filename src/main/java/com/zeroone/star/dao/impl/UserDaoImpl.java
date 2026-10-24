@@ -56,17 +56,54 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public long createUser(User user){
-        throw new UnsupportedOperationException("TODO B：请实现 UserDao.createUser");
+       String sql = "insert into sys_user (username, password, name, student_no, grade, role, status) VALUES (?,?,?,?,?,?,?)";
+        try(Connection conn = DruidUtil.getConnection();
+           PreparedStatement ps = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)){
+            ps.setString(1,user.getUsername());
+            ps.setString(1,user.getPassword());
+            ps.setString(1,user.geName());
+            ps.setString(1,user.getStudentNo());
+            ps.setString(1,user.getGrade());
+            ps.setString(1,user.getRole());
+            ps.setString(1,user.getStatus());
+            ps.executeUpdate();
+            try(ResultSet rs = ps.getGeneratedKeys()){
+                if(rs.next()){
+                    return rs.getLong(1);
+                }
+                throw new RuntimeException("新增用户成功，但未获取到自动生成的主键");
+            }
+        }catch(SQLException e){
+            throw new RuntimeException("新增用户失败",e);
+        }
     }
 
     @Override
     public void updateProfile(long id, String name, String studentNo, String grade){
-        throw new UnsupportedOperationException("TODO B：请实现 UserDao.updateProfile");
+       String sql = "update sys_user set name=?, student_no=?, grade=? where id=?";
+         try(Connection conn = DruidUtil.getConnection();
+           PreparedStatement ps = conn.prepareStatement(sql)){
+             ps.setString(1,name);
+             ps.setString(2,studentNo);
+             ps.setString(3,grade);
+             ps.setString(4,id);
+             ps.executeUpdate();
+         }catch(SQLException e){
+            throw new RuntimeException("修改用户资料失败",e);
+        }
     }
 
     @Override
     public void updatePassword(long id, String password){
-        throw new UnsupportedOperationException("TODO B：请实现UserDao.updatePassword");
+        String sql = "update sys_user set password=? where id=?";
+        try(Connection conn = DruidUtil.getConnection();
+           PreparedStatement ps = conn.prepareStatement(sql)){
+             ps.setString(1,password);
+             ps.setString(2,id);
+             ps.executeUpdate();
+        }catch(SQLException e){
+            throw new RuntimeException("修改密码失败",e);
+        }
     }
 
     @Override
