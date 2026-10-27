@@ -26,11 +26,12 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     public List<Announcement> listByClub(long clubId) {
         //throw new UnsupportedOperationException("TODO G：请实现 AnnouncementDao.listByClub");
         List<Announcement> list = new ArrayList<>();
-        String sql = "SELECT a.id,a.club_id,a.title,a.content,a.created_by,a.created_at" +
-                "a.club_name,u.username AS publisher_name" +
-                "from announcement a JOIN club c ON a.club_id = c.id" +
-                "JOIN user u ON a.created_by = u.id" +
-                "WHERE a.club_id = ? ORDER BY a.created_at DESC,a.id DESC";
+        String sql = "SELECT a.id, a.club_id, c.name AS club_name, a.title, a.content, " +
+                "a.created_by, u.name AS publisher_name, a.created_at " +
+                "FROM announcement a " +
+                "JOIN club c ON c.id = a.club_id " +
+                "JOIN sys_user u ON u.id = a.created_by " +
+                "WHERE a.club_id = ? ORDER BY a.created_at DESC, a.id DESC";
         try(Connection connection = DruidUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setLong(1,clubId);
@@ -60,9 +61,13 @@ public class AnnouncementDaoImpl implements AnnouncementDao {
     public List<Announcement> latestForUser(long userId, int limit) {
         //throw new UnsupportedOperationException("TODO G：请实现 AnnouncementDao.latestForUser");
         List<Announcement> list = new ArrayList<>();
-        String sql = "SELECT a.id,a.club_id,a.club_name,a.title,a.content,a.publisher_name,a.created_at,a.created_by" +
-                "FROM announcement a JOIN member m ON a.club_id = m.club_id" +
-                "WHERE m.user_id = ? ORDER BY a.created_at DESC LIMIT ?";
+        String sql = "SELECT a.id, a.club_id, c.name AS club_name, a.title, a.content, " +
+                "a.created_by, u.name AS publisher_name, a.created_at " +
+                "FROM announcement a " +
+                "JOIN club c ON c.id = a.club_id " +
+                "JOIN sys_user u ON u.id = a.created_by " +
+                "JOIN club_member cm ON cm.club_id = a.club_id " +
+                "WHERE cm.user_id = ? ORDER BY a.created_at DESC, a.id DESC LIMIT ?";
         try(Connection connection = DruidUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setLong(1,userId);
