@@ -29,11 +29,12 @@ public class ActivityDaoImpl implements ActivityDao {
         //throw new UnsupportedOperationException("TODO G：请实现 ActivityDao.listByClub");
 
         List<Activity> list = new ArrayList<>();
-        String sql = "SELECT a.id,a.club_id,a.club_name,a.title,a.description,a.start_time,a.location,u.username AS publisher_name," +
-                "a.created_at,a.created_by" +
-                "FROM activity a JOIN club c ON a.club_id = c.id" +
-                "JOIN user u ON a.created_by = u.id" +
-                "WHERE a.club_id = ? ORDER BY start_time ";
+        String sql = "SELECT a.id, a.club_id, c.name AS club_name, a.title, a.description, " +
+                "a.start_time, a.location, u.name AS publisher_name, a.created_at, a.created_by " +
+                "FROM activity a " +
+                "JOIN club c ON c.id = a.club_id " +
+                "JOIN sys_user u ON u.id = a.created_by " +
+                "WHERE a.club_id = ? ORDER BY a.start_time, a.id";
         try(Connection connection = DruidUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setLong(1,clubId);
@@ -64,8 +65,9 @@ public class ActivityDaoImpl implements ActivityDao {
     public void create(long clubId, long userId, String title, String description,
                        String startTime, String location) {
         //throw new UnsupportedOperationException("TODO G：请实现 ActivityDao.create");
-        String sql = "INSERT INTO activity(club_id,created_by,title,description,start_time        ,location)" +
-                "VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO activity " +
+                "(club_id, created_by, title, description, start_time, location) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
         try(Connection connection = DruidUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setLong(1,clubId);

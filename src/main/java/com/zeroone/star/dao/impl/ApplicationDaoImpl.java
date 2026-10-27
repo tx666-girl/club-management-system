@@ -96,7 +96,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
                 "FROM application a " +
                 "JOIN sys_user s ON s.id = a.user_id " +
                 "JOIN club c ON c.id = a.club_id " +
-                "WHERE a.`status` = 'PENDING'" +
+                "WHERE a.`status` = 'PENDING' " +
                 "ORDER BY a.created_at";
         try (Connection conn = DruidUtil.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
