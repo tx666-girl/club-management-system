@@ -23,19 +23,83 @@ import java.util.Optional;
  */
 public class ClubDaoImpl implements ClubDao {
 
+    private static final String BASE_SELECT =
+            "SELECT c.id, c.name, c.category, c.description, c.image_url, c.member_count, " +
+            "EXISTS(SELECT 1 FROM club_member cm " +
+            "WHERE cm.club_id = c.id AND cm.user_id = ?) AS joined, " +
+            "EXISTS(SELECT 1 FROM application a " +
+            "WHERE a.club_id = c.id AND a.user_id = ? " +
+            "AND a.type = 'JOIN' AND a.status = 'PENDING') AS pending " +
+            "FROM club c ";
+
     @Override
     public List<Club> list(String category, long userId) {
-        throw new UnsupportedOperationException("TODO C：请实现 ClubDao.list");
+        boolean hasCategory = category != null && !category.trim().isEmpty();
+        String sql = BASE_SELECT + (hasCategory ? "WHERE c.category = ? " : "") + "ORDER BY c.id";
+
+        try (Connection connection = DruidUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            int index = 1;
+            statement.setLong(index++, userId);
+            statement.setLong(index++, userId);
+            if (hasCategory) {
+                statement.setString(index, category);
+            }
+
+            List<Club> clubs = new ArrayList<>();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    clubs.add(mapClub(resultSet));
+                }
+            }
+            return clubs;
+        } catch (SQLException e) {
+            throw new RuntimeException("查询社团列表失败", e);
+        }
     }
 
     @Override
     public Optional<Club> findById(long clubId, long userId) {
-        throw new UnsupportedOperationException("TODO C：请实现 ClubDao.findById");
+        String sql = BASE_SELECT + "WHERE c.id = ?";
+
+        try (Connection connection = DruidUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, userId);
+            statement.setLong(3, clubId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next()
+                        ? Optional.of(mapClub(resultSet))
+                        : Optional.empty();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("查询社团详情失败", e);
+        }
     }
 
     @Override
     public List<Club> joinedByUser(long userId) {
-        throw new UnsupportedOperationException("TODO C：请实现 ClubDao.joinedByUser");
+        String sql =
+                "SELECT c.id, c.name, c.category, c.description, c.image_url, c.member_count, " +
+                "TRUE AS joined, FALSE AS pending " +
+                "FROM club c JOIN club_member cm ON cm.club_id = c.id " +
+                "WHERE cm.user_id = ? ORDER BY c.id";
+
+        try (Connection connection = DruidUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, userId);
+
+            List<Club> clubs = new ArrayList<>();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    clubs.add(mapClub(resultSet));
+                }
+            }
+            return clubs;
+        } catch (SQLException e) {
+            throw new RuntimeException("查询已加入社团失败", e);
+        }
     }
 
     @Override
@@ -152,16 +216,49 @@ public class ClubDaoImpl implements ClubDao {
 
     @Override
     public boolean existsById(long clubId) {
-        throw new UnsupportedOperationException("TODO C：请实现 ClubDao.existsById");
+        String sql = "SELECT 1 FROM club WHERE id = ?";
+        try (Connection connection = DruidUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, clubId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("判断社团是否存在失败", e);
+        }
     }
 
     @Override
     public int countAll() {
-        throw new UnsupportedOperationException("TODO C：请实现 ClubDao.countAll");
+        return count("SELECT COUNT(*) FROM club");
     }
 
     @Override
     public int sumMemberCount() {
-        throw new UnsupportedOperationException("TODO C：请实现 ClubDao.sumMemberCount");
+        return count("SELECT COALESCE(SUM(member_count), 0) FROM club");
+    }
+
+    private int count(String sql) {
+        try (Connection connection = DruidUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException("统计社团数据失败", e);
+        }
+    }
+
+    private Club mapClub(ResultSet resultSet) throws SQLException {
+        Club club = new Club();
+        club.id = resultSet.getLong("id");
+        club.name = resultSet.getString("name");
+        club.category = resultSet.getString("category");
+        club.description = resultSet.getString("description");
+        club.imageUrl = resultSet.getString("image_url");
+        club.memberCount = resultSet.getInt("member_count");
+        club.joined = resultSet.getBoolean("joined");
+        club.pending = resultSet.getBoolean("pending");
+        return club;
     }
 }
